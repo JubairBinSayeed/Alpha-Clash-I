@@ -17,7 +17,10 @@ function showElementById(elementId){
     const showElement = document.getElementById(elementId);
     showElement.classList.remove('hidden');
 }
-
+function setBackgroundColor(elementId){
+    const element = document.getElementById(elementId);
+    element.classList.add('bg-orange-400');
+}
 function getRandomAlphabet(){
     //  step-2 : generate random alphabet 
     const alphabetString = 'abcdefghijklmnopqrstuvwxyz';
