@@ -1,3 +1,5 @@
+
+
 function continueGame(){
     const alphabet = getRandomAlphabet();
     console.log('your random alphabet',alphabet);
