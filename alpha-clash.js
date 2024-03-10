@@ -21,9 +21,9 @@ function handleKeyboardKeyupEvent(event){
     if(playerPressed === expectedAlphabet){
         console.log('you get a point');
 
-        const score = getElementValueById('current-score');
+        const score = getTextElementValueById('current-score');
         const updatedScore = score + 1;
-        setElementValueById('current-score', updatedScore);
+        setTextElementValueById('current-score', updatedScore);
         // -------------------------
         // update score
         // // step 1 get the current score 
@@ -41,9 +41,9 @@ function handleKeyboardKeyupEvent(event){
         continueGame();
     } else {
         console.log('you missed a life');
-        const life = getElementValueById('current-life');
+        const life = getTextElementValueById('current-life');
         const updatedLife = life - 1;
-        setElementValueById('current-life', updatedLife); 
+        setTextElementValueById('current-life', updatedLife); 
         // updated life
         // step 1 get the current life
         // const currentLifeElement = document.getElementById('current-life');
@@ -56,8 +56,7 @@ function handleKeyboardKeyupEvent(event){
         // currentLifeElement.innerText = newLife 
     if(updatedLife === 0){
         console.log('game over');
-        hideGameOverPlayGround('play-ground');
-        showGameOver('score');
+        gameOver();
     } 
     }
 } 

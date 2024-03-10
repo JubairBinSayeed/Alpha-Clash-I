@@ -14,23 +14,23 @@ function removeBackgroundColorByElement(elementId){
     const element = document.getElementById(elementId);
     element.classList.remove('bg-orange-400');
 }
-function getElementValueById(elementId){
+function getTextElementValueById(elementId){
     const element = document.getElementById(elementId);
     const elementValueText = element.innerText;
     const value = parseInt(elementValueText);
     return value;
-} 
-function setElementValueById(elementId, value){
-    const element = document.getElementById(elementId);
-    element.innerText = value
 }
-function hideGameOverPlayGround(elementId){
+function setTextElementValueById(elementId, value){
     const element = document.getElementById(elementId);
-    element.classList.add('hidden');
+    element.innerText = value;
 }
-function showGameOver(elementId){
-    const showElement = document.getElementById(elementId);
-    showElement.classList.remove('hidden');
+function gameOver(){
+    showElementById('final-score');
+    hideElementById('play-ground');
+    // update the final score
+    // step 1 get the final score
+    const lastScore = getTextElementValueById('current-score');
+    console.log(lastScore);
 }
 function continueGame(){
     const alphabet = getRandomAlphabet();
@@ -46,7 +46,12 @@ function continueGame(){
 
 
 function play(){
+    // hide everything show only play ground
     hideElementById('home-screen');
+    hideElementById('final-score');
     showElementById('play-ground');
+    // rest score and life 
+    setTextElementValueById('current-life', 5);
+    setTextElementValueById('current-score', 0);
     continueGame();
 }
