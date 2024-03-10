@@ -1,79 +1,119 @@
 // function play(){
-//     // console.log('Connected');
-
-//     // step-1 : hide the home screen. to hide the home screen and and add the class hidden to the home screen.
+//     // step-1: hide the home screen. to hide the screen add the class hidden to the home section
 //     const homeSection = document.getElementById('home-screen');
 //     homeSection.classList.add('hidden');
-//     // show the play-ground
-//     const playGroundSection = document.getElementById('play-ground');
-//     playGroundSection.classList.remove('hidden');
+//     // console.log(homeSection.classList)
 
-// } 
-function handleKeyboardKeyupEvent(event){
-    const playerPressed = event.key
-    // console.log(playerPressed);
-    // expected to press
+//     // show the playground
+//     const playgroundSection = document.getElementById('play-ground');
+//     playgroundSection.classList.remove('hidden');
+//     // console.log(playgroundSection.classList)
+// }
+
+function handleKeyboardKeyUpEvent(event) {
+    const playerPressed = event.key;
+    console.log( 'player pressed', playerPressed)
+
+    // stop the game if pressed 'Esc'
+    if(playerPressed === 'Escape'){
+        gameOver();
+    }
+
+    // key player is expected to press
     const currentAlphabetElement = document.getElementById('current-alphabet');
     const currentAlphabet = currentAlphabetElement.innerText;
     const expectedAlphabet = currentAlphabet.toLowerCase();
-    
-    // checked if right or wrong
-    if(playerPressed === expectedAlphabet){
-        console.log('you get a point');
 
-        const score = getTextElementValueById('current-score');
-        const updatedScore = score + 1;
+    // check right or wrong key pressed
+    if (playerPressed === expectedAlphabet) {
+        console.log('you got a point!');
+
+        const currentScore = getTextElementValueById('current-score');
+        const updatedScore = currentScore + 1;
         setTextElementValueById('current-score', updatedScore);
-        // -------------------------
-        // update score
-        // // step 1 get the current score 
+
+        // ---------------------------------
+        // update score:
+        // 1. get the current score
         // const currentScoreElement = document.getElementById('current-score');
         // const currentScoreText = currentScoreElement.innerText;
         // const currentScore = parseInt(currentScoreText);
         // console.log(currentScore);
-        // // step 2 increase score by 1
-        // const newScore = currentScore + 1;
+        
+        // // 2 .increase the score by 1
+        const newScore = currentScore + 1;
 
-        // // step 3 show the updated score
-        // currentScoreElement.innerText = newScore 
+        // // 3. show the updated score
+        // currentScoreElement.innerText = newScore;
+
         // start a new round
-        removeBackgroundColorByElement(expectedAlphabet);
+        removeBackgroundColorById(expectedAlphabet);
         continueGame();
-    } else {
-        console.log('you missed a life');
-        const life = getTextElementValueById('current-life');
-        const updatedLife = life - 1;
-        setTextElementValueById('current-life', updatedLife); 
-        // updated life
-        // step 1 get the current life
+    }
+    else {
+        console.log('dhurrr vaiya va apu...right key press koro');
+
+        const currentLife = getTextElementValueById('current-life');
+        const updatedLife = currentLife - 1;
+        setTextElementValueById('current-life', updatedLife);
+
+        if(updatedLife === 0){
+            gameOver();
+        }
+
+        // ----------------------------
+        // step-1: get the current Life number
         // const currentLifeElement = document.getElementById('current-life');
         // const currentLifeText = currentLifeElement.innerText;
         // const currentLife = parseInt(currentLifeText);
-        // console.log(currentLife);
-        // // step 2 if user get's wrong key - 1
+
+        // // step -2: reduce the life count
         // const newLife = currentLife - 1;
-        // // step 3 how the updated life
-        // currentLifeElement.innerText = newLife 
-    if(updatedLife === 0){
-        console.log('game over');
-        gameOver();
-    } 
+
+        // // step-3: display the updated life count
+        // currentLifeElement.innerText = newLife;
     }
-} 
-document.addEventListener('keyup',handleKeyboardKeyupEvent);
-function getRandomAlphabet(){
-    //  step-2 : generate random alphabet 
-    const alphabetString = 'abcdefghijklmnopqrstuvwxyz';
-    const alphabetSplit = alphabetString.split('');
-    // console.log(alphabetSplit);
+}
 
-    //  get random number between 0 - 25
-    const randomNumber = Math.random()*25;
-    const index = Math.round(randomNumber);
-    // console.log(index);
+document.addEventListener('keyup', handleKeyboardKeyUpEvent);
 
-    const alphabet = alphabetSplit[index];
-    // console.log(index,alphabet);
-    return alphabet;
-} 
+function continueGame() {
+    // step -1: generate a random alphabet
+    const alphabet = getARandomAlphabet();
+    // console.log('your random alphabet', alphabet);
 
+    // set randomly generated alphabet to the screen (show it)
+    const currentAlphabetElement = document.getElementById('current-alphabet');
+    currentAlphabetElement.innerText = alphabet;
+
+    // set background color
+    setBackgroundColorById(alphabet);
+}
+
+function play() {
+    // hide everything show only the playground
+    hideElementById('home-screen');
+    hideElementById('final-score');
+    showElementById('play-ground');
+
+    // reset score and life
+    setTextElementValueById('current-life', 5);
+    setTextElementValueById('current-score', 0);
+
+    continueGame();
+}
+
+function gameOver(){
+    hideElementById('play-ground');
+    showElementById('final-score');
+    // update final score
+    // 1.get the final score
+    const lastScore = getTextElementValueById('current-score');
+    console.log(lastScore);
+    setTextElementValueById('last-score', lastScore);
+
+    // clear the last selected alphabet highlight
+    const currentAlphabet = getElementTextById('current-alphabet');
+    // console.log(currentAlphabet);
+    removeBackgroundColorById(currentAlphabet);
+}
